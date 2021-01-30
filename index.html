@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--Header and Menu Section-->
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Booking Section-->
+    <main class="main-content container">
+        <div class="booking-form">
+            <h3>Booking Flights</h3>
+            <div class="input-group">
+                <label for="">Flying From</label>
+                <input class="inp-style" type="text" name="" placeholder="Dhake, Bangladesh">
+            </div>
+            <div class="input-group">
+                <label for="">Flying To</label>
+                <input class="inp-style" type="text" name="" placeholder="New York, United States">
+            </div>
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">Departure</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+                <div class="input-group">
+                    <label for="">Return</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+            </div>
+            <div class="input-group f-class">
+                <div>
+                    <label for="">First Class ($150)</label>
+                    <input id="firstClassSeatQty" name="firstClassSeatQty" class="inp-style inp-width" value="0" type="number" >
+                </div>
+                <div class="plus-minus-btn">
+                    <p> <button id="firstClassPlusBtn" class="plus-minus-btn-style">+</button> <button id="firstClassMinusBtn" class="plus-minus-btn-style">-</button> </p>
+                </div>
+            </div>
+            
+            <div class="input-group f-class">
+                <div>
+                    <label for="">Economy ($100)</label>
+                    <input id="economySeatQty" class="inp-style inp-width" value="0" type="number" name="">
+                </div>
+                <div class="plus-minus-btn">
+                    <p> <button id="economyPlusBtn" class="plus-minus-btn-style">+</button> <button id="economyMinusBtn" class="plus-minus-btn-style">-</button> </p>
+                </div>
+            </div>
+            <div class="calculations">
+                <div class="amount">
+                    <div class="left">
+                        <p>Subtotal</p>
+                    </div>
+                    <div class="right">
+                        <p id="subTotalShow">$ 0</p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge 10% VAT</p>
+                    </div>
+                    <div class="right">
+                        <p id="vatShow">$ 0</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="right">
+                        <p id="totalShow">$ 0</p>
+                    </div>
+                </div>
+            </div>
+            <button id="bookBtn" class="btn-style">Book Now</button>
+        </div>
+
+        <div class="booking-content">
+            <h1>discover <br> around the world</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicingelit. Provident voluptatibus quam fuga laborumalias veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt nobise voluptatibus quam</p>
+        </div>
+    </section>
+    <!-- <div class="">
+
+    </div> -->
+
+    <!--Thank You-->
+    <script>
+        // ----------- Initialize all button instance -----------
+        const btnFirstClassPlus = document.getElementById("firstClassPlusBtn");
+        const btnFirstClassMinus = document.getElementById("firstClassMinusBtn");
+        const btnEconomyPlus = document.getElementById("economyPlusBtn");
+        const btnEconomyMinus = document.getElementById("economyMinusBtn");
+
+        const btnBook = document.getElementById("bookBtn");
+        
+        // -------First Class Button Handler-----------
+        btnFirstClassPlus.addEventListener("click", function(){
+            handlerSeatQuantityAndAmount(true,"firstClass");
+        });
+        btnFirstClassMinus.addEventListener("click", function(){
+            handlerSeatQuantityAndAmount(false, "firstClass");
+        });
+
+        // --------Economy Button Handler-----------
+        btnEconomyPlus.addEventListener("click",function(){
+            handlerSeatQuantityAndAmount(true, "economy");
+        });
+        btnEconomyMinus.addEventListener("click", function(){
+            handlerSeatQuantityAndAmount(false, "economy");
+        });
+
+
+        // --------Book Button Handler----------
+        btnBook.addEventListener("click",function(){
+
+        });
+
+
+        // --------Handaling Seat Increment and Decrement and Total Price---------
+        function handlerSeatQuantityAndAmount(isIncrease,seatType){
+            var quantitySeat = parseInt(document.getElementById(seatType+"SeatQty").value);
+
+            
+            if(isIncrease==true){
+                document.getElementById(seatType+"SeatQty").value = ++quantitySeat;
+                
+            }
+            if(isIncrease==false){
+                if(quantitySeat>0){
+                    document.getElementById(seatType+"SeatQty").value = --quantitySeat;
+                }
+            }
+
+            const subTotal = document.getElementById("subTotalShow");
+            const vat = document.getElementById("vatShow");
+            const total = document.getElementById("totalShow");
+            var subTotalAmount = 0;
+
+            if(seatType == "firstClass"){
+                var firstClassAmount = 150*quantitySeat;
+                var othersSeatQuantity =parseInt(document.getElementById("economySeatQty").value);
+                subTotalAmount = firstClassAmount + 100*othersSeatQuantity;
+
+            }
+            if(seatType == "economy"){
+                var economyAmount = 100*quantitySeat;
+                var othersSeatQuantity = parseInt(document.getElementById("firstClassSeatQty").value);
+                subTotalAmount = economyAmount + 150*othersSeatQuantity;
+            }
+
+            
+            // ------Show Sub Total and Total In Display--------
+            var vatAmount = subTotalAmount * 0.1;
+            var totalAmount = subTotalAmount + vatAmount;
+            subTotal.innerHTML = "$ "+ subTotalAmount;
+            vat.innerHTML = "$ "+ vatAmount;
+            total.innerHTML = "$ "+ totalAmount;
+        }
+    </script>
+</body>
+
+</html>
